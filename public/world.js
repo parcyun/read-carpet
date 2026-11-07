@@ -1,13 +1,14 @@
 // One decoded image and one viewport-sized map cache are reused throughout the session.
 const mapImage = new Image();
 mapImage.src = '/assets/lobby/lobby.png';
+const MAP_SCALE = 1.4; // 70% of the previous 2x viewport map.
 let mapCache, cacheWidth = 0, cacheHeight = 0, lastDraw;
 mapImage.onload = () => { mapCache = null; if (lastDraw) drawLibrary(lastDraw.canvas, lastDraw.position); };
 
 export function mapBounds(canvas) {
   const rect = canvas?.getBoundingClientRect();
   // Allow the centered character to approach the doors near the map edges.
-  return { x: (rect?.width || 0) * .84, y: (rect?.height || 0) * .84 };
+  return { x: (rect?.width || 0) * MAP_SCALE * .42, y: (rect?.height || 0) * MAP_SCALE * .42 };
 }
 export function drawLibrary(canvas, position) {
   if (!canvas) return;
@@ -20,7 +21,7 @@ export function drawLibrary(canvas, position) {
   ctx.imageSmoothingEnabled = false;
   lastDraw = {canvas, position: {...position}};
   if (!mapImage.complete || !mapImage.naturalWidth) { ctx.fillStyle = '#d9c3a5'; ctx.fillRect(0,0,width,height); return; }
-  const w = Math.round(width * 2), h = Math.round(height * 2);
+  const w = Math.round(width * MAP_SCALE), h = Math.round(height * MAP_SCALE);
   if (!mapCache || cacheWidth !== w || cacheHeight !== h) {
     mapCache = document.createElement('canvas'); mapCache.width = w; mapCache.height = h;
     const map = mapCache.getContext('2d'); map.imageSmoothingEnabled = false;
@@ -31,12 +32,12 @@ export function drawLibrary(canvas, position) {
     map.fillStyle = '#fff4e5'; map.font = `bold ${Math.max(12,h*.025)}px "Nanum Gothic", sans-serif`; map.textAlign='center'; map.textBaseline='middle'; map.fillText('도서 검색',w*.292,h*.417);
     cacheWidth = w; cacheHeight = h;
   }
-  ctx.drawImage(mapCache, -width / 2 - position.x, -height / 2 - position.y, width * 2, height * 2);
+  ctx.drawImage(mapCache, (width - width * MAP_SCALE) / 2 - position.x, (height - height * MAP_SCALE) / 2 - position.y, width * MAP_SCALE, height * MAP_SCALE);
 }
 export function libraryObjectAt(x, y) {
   if (!lastDraw) return null;
   const {canvas, position} = lastDraw, {width, height} = canvas.getBoundingClientRect();
-  const px = (x + width / 2 + position.x) / (width * 2), py = (y + height / 2 + position.y) / (height * 2);
+  const px = (x - width / 2 + width * MAP_SCALE / 2 + position.x) / (width * MAP_SCALE), py = (y - height / 2 + height * MAP_SCALE / 2 + position.y) / (height * MAP_SCALE);
   // Small approach areas directly in front of each object, in image coordinates.
   if (py >= .235 && py <= .285 && px >= .45 && px <= .55) return 'arena-demo';
   if (py >= .22 && py <= .28 && px >= .11 && px <= .19) return 'bookshelf';
