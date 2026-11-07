@@ -41,6 +41,26 @@ let ui={screen:state.nickname?'world':'welcome',modal:state.nickname?'home':null
 const app=document.querySelector('#app');const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let saveQueue=Promise.resolve();
 function save(){const snapshot=JSON.stringify(state);saveQueue=saveQueue.then(async()=>{try{if(!isLocalServer){localStorage.setItem('read-carpet-state',snapshot);return true}let r=await fetch('/api/state',{method:'PUT',headers:{'Content-Type':'application/json'},body:snapshot});if(!r.ok)throw Error();return true}catch{alert('저장하지 못했어요. 저장 공간 또는 서버 상태를 확인해 주세요.');return false}});return saveQueue}
+// Apply the shared demonstration starting state once without removing saved entries.
+if (!state.demoSeedVersion) {
+  const shelfSeed = {1:210,2:135,3:95,5:180,9:120,13:90};
+  state.shelf ||= {};
+  for (const [id, score] of Object.entries(shelfSeed)) state.shelf[id] ||= {score};
+  state.items = [...new Set([...(state.items || []), 0, 1, 2])];
+  state.styleOwned = [...new Set([...(state.styleOwned || []), '0:1', '3:1', '4:1', '5:1'])];
+  const entries = state.guestbook.mine ||= [];
+  const samples = [
+    {author:'달빛 책갈피',text:'오늘도 좋은 문장 만나고 가요!',date:'2026-11-06'},
+    {author:'책방 산책',text:'책장이 정말 멋져요. 다음에 또 놀러 올게요.',date:'2026-11-04'},
+    {author:'소란한 페이지',text:'같이 천천히 읽어요 :)',date:'2026-11-02'}
+  ];
+  for (const sample of samples) if (!entries.some(entry => entry.author === sample.author && entry.text === sample.text)) entries.push(sample);
+  state.points = 540;
+  state.totalEarned = 1450;
+  state.demoSeedVersion = 1;
+  if (state.nickname) save();
+}
+
 
 const scrollButton=document.createElement('button');scrollButton.className='scroll-to-top';scrollButton.type='button';scrollButton.setAttribute('aria-label','맨 위로 이동');scrollButton.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>';scrollButton.hidden=true;document.body.append(scrollButton);
 let lastScroller=null,underProfileScroller=null;
