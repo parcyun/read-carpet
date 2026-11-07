@@ -6,7 +6,8 @@ mapImage.onload = () => { mapCache = null; if (lastDraw) drawLibrary(lastDraw.ca
 
 export function mapBounds(canvas) {
   const rect = canvas?.getBoundingClientRect();
-  return { x: (rect?.width || 0) / 2, y: (rect?.height || 0) / 2 };
+  // Allow the centered character to approach the doors near the map edges.
+  return { x: (rect?.width || 0) * .84, y: (rect?.height || 0) * .84 };
 }
 export function drawLibrary(canvas, position) {
   if (!canvas) return;
@@ -15,6 +16,7 @@ export function drawLibrary(canvas, position) {
   const ratio = Math.min(devicePixelRatio || 1, 2);
   canvas.width = Math.round(width * ratio); canvas.height = Math.round(height * ratio);
   const ctx = canvas.getContext('2d'); ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  ctx.fillStyle = '#24161a'; ctx.fillRect(0, 0, width, height);
   ctx.imageSmoothingEnabled = false;
   lastDraw = {canvas, position: {...position}};
   if (!mapImage.complete || !mapImage.naturalWidth) { ctx.fillStyle = '#d9c3a5'; ctx.fillRect(0,0,width,height); return; }
@@ -35,10 +37,11 @@ export function libraryObjectAt(x, y) {
   if (!lastDraw) return null;
   const {canvas, position} = lastDraw, {width, height} = canvas.getBoundingClientRect();
   const px = (x + width / 2 + position.x) / (width * 2), py = (y + height / 2 + position.y) / (height * 2);
-  if (py >= .24 && py < .35 && px > .43 && px < .57) return 'arena-demo';
-  if (py >= .25 && py < .35 && px >= .24 && px < .34) return 'bookshelf';
-  if (py >= .25 && py < .35 && px > .68 && px <= .76) return 'inventory';
-  if (py > .4 && py < .62 && px > .28 && px < .4) return 'categories';
-  if (py > .4 && py < .62 && px > .6 && px < .74) return 'desk';
+  // Small approach areas directly in front of each object, in image coordinates.
+  if (py >= .235 && py <= .285 && px >= .45 && px <= .55) return 'arena-demo';
+  if (py >= .22 && py <= .28 && px >= .11 && px <= .19) return 'bookshelf';
+  if (py >= .26 && py <= .32 && px >= .79 && px <= .87) return 'inventory';
+  if (py >= .59 && py <= .65 && px >= .25 && px <= .33) return 'categories';
+  if (py >= .59 && py <= .65 && px >= .69 && px <= .77) return 'desk';
   return null;
 }
