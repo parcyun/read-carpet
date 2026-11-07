@@ -171,3 +171,5 @@ html,.modal-shell,.minihome,.mini-scroll,.mini-side,.event-panel,.carousel{scrol
 /* Keep the player proportional to the resized library on desktop and mobile. */
 .lobby-player .avatar{width:clamp(42px,5.2vw,60px);height:clamp(67px,8.32vw,96px);transform:none}.lobby-player>span{font-size:clamp(9px,1vw,11px)}
 @keyframes pixel-walk{50%{transform:translateY(-3px)}}
+
+.lobby-replay{position:fixed;z-index:35;right:18px;top:calc(70px + env(safe-area-inset-top));font-size:11px}.replay-exit{min-height:44px;padding:0 14px;border:1px solid #fff9;border-radius:999px;background:transparent;color:inherit;font-size:11px}@media(max-width:700px){.lobby-replay{right:10px;top:calc(60px + env(safe-area-inset-top));font-size:10px}}
