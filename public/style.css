@@ -207,3 +207,5 @@ html,.modal-shell,.minihome,.mini-scroll,.mini-side,.event-panel,.carousel{scrol
 
 
 .arena-start-floating{position:fixed;z-index:12;left:50%;bottom:calc(100px + env(safe-area-inset-bottom));transform:translateX(-50%);min-width:180px;box-shadow:0 4px 18px #24161a38}
+
+.arena-reveal-trigger{width:100%;color:inherit;font:inherit;cursor:pointer}.arena-reveal-trigger:hover{border-color:#fff}.arena-reveal-trigger:focus-visible{outline:3px solid #fff;outline-offset:3px}
