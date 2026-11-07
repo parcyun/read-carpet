@@ -183,4 +183,27 @@ html,.modal-shell,.minihome,.mini-scroll,.mini-side,.event-panel,.carousel{scrol
 .score-row{display:flex;align-items:center;justify-content:center;gap:4px}.score-row .profile-share{position:static;flex:none;padding:6px}.shelf-card [data-action=visibility-book]{display:block;min-height:36px;padding:0;text-align:left}
 @media(max-width:700px){.score-row{justify-content:flex-start}.mission-shell{width:min(420px,calc(100vw - 48px));max-height:calc(100dvh - 168px - env(safe-area-inset-bottom))}}
 /* The mission close control must remain reachable on narrow screens. */
-body:has(.mission-shell) .lobby-replay{visibility:hidden}
+
+
+/* Group the right-edge actions and keep the QR tools aligned around a centered handle. */
+.lobby-quick-actions{position:fixed;z-index:35;top:calc(70px + env(safe-area-inset-top));right:0;display:flex;gap:6px}.lobby-quick-actions .lobby-event{position:static;min-height:44px;white-space:nowrap;font-size:11px}.lobby-quick-actions .lobby-qr{border-radius:999px 0 0 999px}.lobby-quick-actions .lobby-replay{visibility:visible}
+.profile-circle .avatar,.mini-profile .profile-circle .avatar{width:80%;height:90%;transform:none}.mini-name{display:flex;justify-content:center;align-items:center}.mini-name .profile-share{position:static;padding:6px}.mini-name .profile-share span{border:0;background:transparent;color:var(--ink)}
+.qr-panel{position:fixed;z-index:60;box-sizing:border-box;min-width:0;padding:0;border:1px solid var(--line);border-radius:18px;background:var(--bg);box-shadow:0 14px 45px #24161a45;color:var(--ink);overflow:hidden}.qr-panel[hidden]{display:none}.qr-panel[popover]{margin:0;max-width:none;max-height:none;inset:auto}.qr-head{position:relative;height:48px;display:flex;justify-content:flex-end;align-items:center;padding:0 5px}.qr-handle{position:absolute;left:50%;top:2px;transform:translateX(-50%);width:64px;height:40px;border:0;background:transparent;touch-action:none;cursor:grab}.qr-handle:before{content:'';display:block;width:38px;height:4px;margin:auto;border-radius:9px;background:var(--red)}.qr-handle:active{cursor:grabbing}.qr-tool{width:40px;height:40px;border:0;background:transparent;color:var(--ink);display:grid;place-items:center;border-radius:50%}.qr-tool svg{width:19px;height:19px}.qr-pin svg{transform:rotate(35deg)}.qr-pin[aria-pressed=true]{color:var(--red);background:var(--spot)}.qr-pin[aria-pressed=true] svg{transform:none}.qr-art{display:block;position:absolute;inset:48px 12px 12px;background:#fff;border-radius:10px}.qr-art img{width:100%;height:100%;object-fit:contain;display:block;image-rendering:pixelated}.qr-resize{position:absolute;right:1px;bottom:1px;width:26px;height:26px;border:0;background:transparent;touch-action:none;cursor:nwse-resize}.qr-resize:after{content:'';position:absolute;right:5px;bottom:5px;width:9px;height:9px;border-right:2px solid var(--red);border-bottom:2px solid var(--red)}.qr-panel.is-manipulating{user-select:none}
+@media(max-width:700px){.lobby-quick-actions{top:calc(60px + env(safe-area-inset-top))}.lobby-quick-actions .lobby-event{font-size:10px}.mini-name{justify-content:flex-start}}
+
+/* 첫 화면 액자: 로고 아래에 문구를 두고, 영문 세리프로 표시 */
+.art-frame .supplied-logo{top:30px;width:38%;left:31%}
+.art-frame .art-title{font-family:Georgia,'Times New Roman',serif;font-size:clamp(30px,3.4vw,46px);line-height:1.14;letter-spacing:-.01em;padding-top:calc(46px + 11.5%)}
+.art-frame .art-title i{font-style:italic;color:var(--red)}
+.art-frame .art-avatar{bottom:72px}
+@media(max-width:700px){
+  .art-frame .supplied-logo{top:20px;width:34%;left:33%}
+  .art-frame .art-title{font-size:22px;padding-top:calc(24px + 10.5%)}
+  .art-frame .art-avatar{bottom:24px}
+}
+
+.lobby-quick-actions{top:max(10px,env(safe-area-inset-top))}.lobby-viewport>.lobby-event{top:calc(62px + env(safe-area-inset-top))}
+@media(max-width:700px){.lobby-quick-actions{top:max(8px,env(safe-area-inset-top))}.lobby-viewport>.lobby-event{top:calc(58px + env(safe-area-inset-top))}}
+
+
+.arena-start-floating{position:fixed;z-index:12;left:50%;bottom:calc(100px + env(safe-area-inset-bottom));transform:translateX(-50%);min-width:180px;box-shadow:0 4px 18px #24161a38}
