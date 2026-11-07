@@ -137,3 +137,14 @@ html,.modal-shell,.minihome,.mini-scroll,.mini-side,.event-panel,.carousel{scrol
   .quiz-bottom small{display:none}
   .quiz-answer{padding:15px}
 }
+
+/* 첫 화면 액자: 로고 아래에 문구를 두고, 영문 세리프로 표시 */
+.art-frame .supplied-logo{top:30px;width:38%;left:31%}
+.art-frame .art-title{font-family:Georgia,'Times New Roman',serif;font-size:clamp(30px,3.4vw,46px);line-height:1.14;letter-spacing:-.01em;padding-top:calc(46px + 11.5%)}
+.art-frame .art-title i{font-style:italic;color:var(--red)}
+.art-frame .art-avatar{bottom:72px}
+@media(max-width:700px){
+  .art-frame .supplied-logo{top:20px;width:34%;left:33%}
+  .art-frame .art-title{font-size:22px;padding-top:calc(24px + 10.5%)}
+  .art-frame .art-avatar{bottom:24px}
+}
