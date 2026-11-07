@@ -156,3 +156,6 @@ html,.modal-shell,.minihome,.mini-scroll,.mini-side,.event-panel,.carousel{scrol
 .friend-heading{justify-content:center;text-align:center;color:var(--muted);font-size:11px}.people .person-card{border:1px solid var(--line);border-radius:15px;padding:12px;background:var(--bg);font-weight:400}.people .person-card b{font-weight:400}.people .person-pic{width:60px;height:60px;border-radius:50%}
 
 .arena-picks{max-height:min(42vh,360px);overflow-y:auto;overscroll-behavior:contain}
+/* Keep modal content scrollable without showing scrollbar tracks. */
+.overlay,.overlay *,.event-overlay,.event-overlay *{scrollbar-width:none}
+.overlay::-webkit-scrollbar,.overlay *::-webkit-scrollbar,.event-overlay::-webkit-scrollbar,.event-overlay *::-webkit-scrollbar{display:none}
