@@ -22,7 +22,12 @@ export function drawLibrary(canvas, position) {
   if (!mapCache || cacheWidth !== w || cacheHeight !== h) {
     mapCache = document.createElement('canvas'); mapCache.width = w; mapCache.height = h;
     const map = mapCache.getContext('2d'); map.imageSmoothingEnabled = false;
-    map.drawImage(mapImage, 0, 0, w, h); cacheWidth = w; cacheHeight = h;
+    map.drawImage(mapImage, 0, 0, w, h);
+    // Replace the old place name on the cached map without altering the supplied image.
+    map.fillStyle = '#4e1e26'; map.strokeStyle = '#e9d8be'; map.lineWidth = Math.max(2,w*.002);
+    map.beginPath(); map.roundRect(w*.232,h*.395,w*.12,h*.043,Math.max(3,w*.004)); map.fill(); map.stroke();
+    map.fillStyle = '#fff4e5'; map.font = `bold ${Math.max(12,h*.025)}px "Nanum Gothic", sans-serif`; map.textAlign='center'; map.textBaseline='middle'; map.fillText('도서 검색',w*.292,h*.417);
+    cacheWidth = w; cacheHeight = h;
   }
   ctx.drawImage(mapCache, -width / 2 - position.x, -height / 2 - position.y, width * 2, height * 2);
 }
@@ -30,7 +35,10 @@ export function libraryObjectAt(x, y) {
   if (!lastDraw) return null;
   const {canvas, position} = lastDraw, {width, height} = canvas.getBoundingClientRect();
   const px = (x + width / 2 + position.x) / (width * 2), py = (y + height / 2 + position.y) / (height * 2);
-  if (py < .26 && py > .04 && px > .4 && px < .61) return 'arena-demo';
-  if (py > .34 && py < .64 && px > .1 && px < .47) return 'categories';
+  if (py >= .24 && py < .35 && px > .43 && px < .57) return 'arena-demo';
+  if (py >= .25 && py < .35 && px >= .24 && px < .34) return 'bookshelf';
+  if (py >= .25 && py < .35 && px > .68 && px <= .76) return 'inventory';
+  if (py > .4 && py < .62 && px > .28 && px < .4) return 'categories';
+  if (py > .4 && py < .62 && px > .6 && px < .74) return 'desk';
   return null;
 }
